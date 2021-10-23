@@ -1,0 +1,54 @@
+<script>
+    let number;
+    function vote(id) {
+
+        let numberPass = prompt("Введите номер паспорта:");
+        if (numberPass == null || numberPass == "") {
+            alert("Вы отказались от голосования.");
+        } else {
+            $.ajax({
+                url: '/elections/vote',
+                dataType: "application/json",
+                data: {candidateId:id,passportNumber:numberPass},
+                type: 'PUT',
+                success: function(result) {
+                    // Do something with the result
+                }
+            });
+        }
+    }
+</script>
+<table>
+    <thead>
+    <th>Фотография</th>
+    <th>Фамилия</th>
+    <th>Имя</th>
+    <th>Процент голосов</th>
+    <th>Действие</th>
+    </thead>
+    {{#if candidates.length}}
+    <tbody>
+        {{#each candidates}}
+        <tr>
+            <td>
+                <img src={{photo}} style="width: 200px;height: 200px">
+            </td>
+            <td>
+                {{lastName}}
+            </td>
+            <td>
+                {{firstName}}
+            </td>
+            <td>
+                {{percent}}
+            </td>
+            <td>
+                <button class="btn" onclick= vote('{{_id}}') >Проголосовать</button>
+            </td>
+        </tr>
+        {{/each}}
+        </tbody>
+        {{else}}
+            <p>Нет данных!</p>
+        {{/if}}
+    </table>
