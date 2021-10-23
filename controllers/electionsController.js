@@ -44,8 +44,8 @@ exports.getCandidates = async (request, response) => {
 
 // Saves vote to database
 exports.sendVote = (request, response) => {
-	const permittedCountries = process.env.COUNTRIES_CODE;
-	const codeForPrivateIP = process.env.CODE_FOR_PRIVATE_IP;
+	const permittedCountries = process.env.COUNTRIES_CODE || 'BY';
+	const codeForPrivateIP = process.env.CODE_FOR_PRIVATE_IP || 'BY';
 	if (permittedCountries.indexOf(requestCountry(request, codeForPrivateIP)) !== -1) {
 		const vote = new Vote({
 			_id: new ObjectId(),
