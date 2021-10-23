@@ -13,8 +13,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(function (req, res, next) {
     res.status(404).send("Not Found")
 });
-
+mongoUtils.connectToDB( (err) => {
+    if (err) console.log(err);
+    initDB.initDefaultDB()
     app.listen(PORT, () => console.log(`Running on port ${PORT}.`))
+})
 
 
 
