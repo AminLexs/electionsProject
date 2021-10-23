@@ -27,7 +27,7 @@ exports.getCandidates = async function (request, response) {
         objElem.percent = (stats[elem._id.toString()]!==undefined)?stats[elem._id.toString()]:0
         return objElem
     })
-    response.send(candidates)
+    response.render('stats',{candidates})
 };
 exports.sendVote = function (request, response) {
     //  if(requestCountry(request)===config.get('permittedCountryCode')){
@@ -36,7 +36,8 @@ exports.sendVote = function (request, response) {
         candidateId:request.body.candidateId});
     vote.save(function (err) {
         if (err) return response.send(err);
-        response.send({});
+        response.status(201).send({})
+        //response.redirect(303,'candidates');
     })
     //}else{
     //  response.status(403).send({message:'Your country isn\'t permitted'});

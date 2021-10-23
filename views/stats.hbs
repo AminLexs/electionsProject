@@ -1,18 +1,22 @@
 <script>
     let number;
     function vote(id) {
-
+        let passportNumberReg = /^([0-9]{7})?$/;
         let numberPass = prompt("Введите номер паспорта:");
-        if (numberPass == null || numberPass == "") {
-            alert("Вы отказались от голосования.");
+        if (numberPass == null || numberPass == "" || !passportNumberReg.test(numberPass)) {
+            alert("Неправильно введены данные.");
         } else {
             $.ajax({
                 url: '/elections/vote',
-                dataType: "application/json",
-                data: {candidateId:id,passportNumber:numberPass},
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                data: JSON.stringify({"candidateId":id,"passportNumber":numberPass}),
                 type: 'PUT',
                 success: function(result) {
-                    // Do something with the result
+                    location.reload ()
+                },
+                error:function (error){
+                    console.log(error)
                 }
             });
         }
