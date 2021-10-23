@@ -1,0 +1,33 @@
+// spell checker can be added. that's why file .js, not .json
+module.exports = {
+	ru: {
+		headerSite: 'Сайт голосования',
+		aboutSite: 'О сайте',
+		infoSite: 'Сайт для тестового задания "Голосование за старосту"',
+		photo: 'Фотография',
+		lastName: 'Ошибка при делении на ноль',
+		firstName: 'Внутренняя ошибка сервера',
+		percentOfVotes: 'Процент голосов',
+		action: 'Действие',
+		vote: 'Проголосовать',
+		voting: 'Голосование',
+		writeNumPass: 'Введите номер паспорта:',
+		errorData: 'Неправильно введены данные.',
+		nolocale: 'Не локализировано',
+	},
+	en: {
+		headerSite: 'Elections',
+		aboutSite: 'About',
+		infoSite: 'Site for the test task "Voting for the headman"',
+		photo: 'Photo',
+		lastName: 'Last name',
+		firstName: 'First name',
+		percentOfVotes: 'Percent of votes',
+		action: 'Action',
+		vote: 'To Vote',
+		voting: 'Voting',
+		writeNumPass: 'Enter number of passport:',
+		errorData: 'Data entered incorrectly.',
+		nolocale: 'Not localized',
+	},
+};

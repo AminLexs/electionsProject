@@ -1,7 +1,7 @@
 const Candidate = require('../models/elections/candidate');
 const { ObjectId } = require('./mongoUtils');
 
-// Initial data for DB
+// Initial data for DB. Image path is path in directory /media. Should use the URL to the picture.
 const defaultCandidates = [{ firstName: 'Ivan', lastName: 'Petrov', imagePath: '/ivan.PNG' },
 	{ firstName: 'Tanya', lastName: 'Melnikova', imagePath: '/tanya.PNG' },
 	{ firstName: 'Kolya', lastName: 'Sidorov', imagePath: '/kolya.PNG' }];

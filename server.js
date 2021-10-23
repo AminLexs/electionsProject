@@ -10,6 +10,7 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const localization = require('./localization/localize');
 
 const initDB = require('./common/initializationDB');
 const mongoUtils = require('./common/mongoUtils');
@@ -24,7 +25,11 @@ const app = express(); // Initialization server
 const hbs = exphbs.create({ // Create handlebar
 	defaultLayout: 'main',
 	extname: 'hbs',
+	helpers: {
+		locale: localization,
+	},
 });
+
 app.engine('hbs', hbs.engine); // Set engine handlebars
 app.set('view engine', 'hbs');
 app.set('views', 'views');
