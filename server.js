@@ -1,6 +1,7 @@
 const dotenv = require('dotenv');
 
 dotenv.config(); // Get configuration from .env
+
 const fs = require('fs');
 const path = require('path');
 

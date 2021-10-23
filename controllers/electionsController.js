@@ -12,7 +12,7 @@ function requestCountry(req, privateIpCountry) {
 	if (geo) {
 		return geo.country;
 	}
-	return privateIpCountry ? privateIpReg.test(ip) && privateIpCountry : false;
+	return privateIpCountry ? (privateIpReg.test(ip) || ip === '::1') && privateIpCountry : false;
 }
 
 exports.requestCountry = requestCountry;
@@ -40,18 +40,19 @@ exports.getCandidates = async (request, response) => {
 
 // Saves vote to database
 exports.sendVote = (request, response) => {
-	//  if(requestCountry(request)===config.get('permittedCountryCode')){
-	const vote = new Vote({
-		_id: new ObjectId(),
-		passportNumber: request.body.passportNumber,
-		candidateId: request.body.candidateId,
-	});
-	vote.save((err) => {
-		if (err) return response.send(err);
-		response.status(201).send({});
-		// response.redirect(303,'candidates');
-	});
-	// }else{
-	//  response.status(403).send({message:'Your country isn\'t permitted'});
-	// }
+	const permittedCountries = process.env.COUNTRIES_CODE;
+	const codeForPrivateIP = process.env.CODE_FOR_PRIVATE_IP;
+	if (permittedCountries.indexOf(requestCountry(request, codeForPrivateIP)) !== -1) {
+		const vote = new Vote({
+			_id: new ObjectId(),
+			passportNumber: request.body.passportNumber,
+			candidateId: request.body.candidateId,
+		});
+		vote.save((err) => {
+			if (err) return response.send(err);
+			response.status(201).send({ message: 'You have successfully voted' });
+		});
+	} else {
+		response.status(403).send({ message: 'Your country isn\'t permitted' });
+	}
 };
