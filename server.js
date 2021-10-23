@@ -4,12 +4,15 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const initDB = require('./common/initializationDB')
 const mongoUtils = require('./common/mongoUtils')
+const electionsRouter = require('./routes/electionsRouter')
+const homeRouter = require('./routes/homeRouter')
 
 const PORT = process.env.PORT
 const app = express() // initialization server
 
 app.use(bodyParser.urlencoded({ extended: false }))
-
+app.use('/elections', electionsRouter)
+app.use('/', homeRouter)
 app.use(function (req, res, next) {
     res.status(404).send("Not Found")
 });
