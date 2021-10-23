@@ -1,5 +1,5 @@
 # Elections web-app
-This is server-client 
+This is client/server application  for the election of the headman.
 ## HOW TO USE
 1) Define .env and variables:
   * HTTPPORT - port to use at http server (default 8080)
