@@ -11,8 +11,23 @@ function requestCountry(req, privateIpCountry) {
 }
 
 exports.getCandidates = async function (request, response) {
-
-    response.send('candidates')
+    let candidates = await getDataModel(Candidate, {})
+    let votes = await getDataModel(Vote, {})
+    let stats = votes.reduce(function(acc, el) {
+        acc[el.candidateId.toString()] = (acc[el.candidateId.toString()] || 0) + 1;
+        return acc;
+    }, {});
+    for (let id in stats) {
+        stats[id]/=votes.length
+        stats[id]*=100
+    }
+    candidates = candidates.map(elem=>{
+        let objElem = elem.toObject()
+        //console.log(elem._id.toString())
+        objElem.percent = (stats[elem._id.toString()]!==undefined)?stats[elem._id.toString()]:0
+        return objElem
+    })
+    response.send(candidates)
 };
 exports.sendVote = function (request, response) {
     //  if(requestCountry(request)===config.get('permittedCountryCode')){

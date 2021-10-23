@@ -4,8 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const initDB = require('./common/initializationDB')
 const mongoUtils = require('./common/mongoUtils')
-const electionsRouter = require('./routes/electionsRouter')
-const homeRouter = require('./routes/homeRouter')
+const electionsRouter = require('./routers/electionsRouter')
+const homeRouter = require('./routers/homeRouter')
 
 const PORT = process.env.PORT
 const app = express() // initialization server
