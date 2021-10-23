@@ -9,6 +9,7 @@ This is server-client
   * CODE_FOR_PRIVATE_IP - code for private ips (default 'BY')  
   
   `Warning: you must specify uri_db value.`
+
 2) If you want the https server to be started, then you need to add a ssl certificate and a key (file names certificate.crt and key.key) to the /sslcert directory
 3) Run server.js or use script "npm start"
 4) Functionalities:
