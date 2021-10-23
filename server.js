@@ -1,13 +1,12 @@
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require('express');
 const bodyParser = require('body-parser')
-const config = require('config')
-const path = require("path");
+const initDB = require('./common/initializationDB')
+const mongoUtils = require('./common/mongoUtils')
 
-
-const PORT = config.get('port') || 3000
-
+const PORT = process.env.PORT
 const app = express() // initialization server
-
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
