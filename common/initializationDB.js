@@ -10,7 +10,7 @@ const defaultCandidates = [{ firstName: 'Ivan', lastName: 'Petrov', imagePath: '
 exports.initDefaultDB = () => {
 	Candidate.find({}, (err, docs) => {
 		if (err) return console.log(err);
-		if (docs.length === 0) {
+		if (docs.length === 0) { // If list of candidates empty
 			defaultCandidates.forEach((elem) => {
 				const candidate = new Candidate({
 					_id: new ObjectId(),

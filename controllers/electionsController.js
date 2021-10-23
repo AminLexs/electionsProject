@@ -20,7 +20,11 @@ exports.requestCountry = requestCountry;
 // Returns to the client an array of candidates with the percentage of votes
 exports.getCandidates = async (request, response) => {
 	let candidates = await getDataModel(Candidate, {});
+	if (candidates instanceof Error )
+		response.status(500).send(JSON.stringify({message:candidates.message}))
 	const votes = await getDataModel(Vote, {});
+	if (votes instanceof Error )
+		response.status(500).send(JSON.stringify({message:votes.message}))
 	const stats = votes.reduce((acc, el) => {
 		acc[el.candidateId.toString()] = (acc[el.candidateId.toString()] || 0) + 1;
 		return acc;
@@ -49,7 +53,7 @@ exports.sendVote = (request, response) => {
 			candidateId: request.body.candidateId,
 		});
 		vote.save((err) => {
-			if (err) return response.send(err);
+			if (err) return response.status(500).send(err);
 			response.status(201).send({ message: 'You have successfully voted' });
 		});
 	} else {

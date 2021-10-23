@@ -16,6 +16,7 @@ module.exports = {
 			.then((data) => data)
 			.catch((err) => {
 				console.log(err);
+				return new Error(err.message);
 			});
 	},
 	ObjectId: mongoose.Types.ObjectId,
