@@ -17,9 +17,6 @@ const mongoUtils = require('./common/mongoUtils');
 const electionsRouter = require('./routers/electionsRouter');
 const homeRouter = require('./routers/homeRouter');
 
-const key = fs.readFileSync('./sslcert/key.key');
-const cert = fs.readFileSync('./sslcert/certificate.crt');
-
 const app = express(); // Initialization server
 
 const hbs = exphbs.create({ // Create handlebar
@@ -45,13 +42,22 @@ app.use((req, res) => {
 });
 
 const httpServer = http.createServer(app);
-const httpsServer = https.createServer({ key, cert }, app);
-const httpsPort = process.env.HTTPSPORT;
-const httpPort = process.env.HTTPPORT;
+let httpsServer;
+try{
+	const key = fs.readFileSync('./sslcert/key.key');
+	const cert = fs.readFileSync('./sslcert/certificate.crt');
+	httpsServer = https.createServer({ key, cert }, app);
+}catch (error){
+	console.log(error)
+}
+
+const httpsPort = process.env.HTTPSPORT || 8080;
+const httpPort = process.env.HTTPPORT || 8443;
 
 mongoUtils.connectToDB((err) => {
 	if (err) console.log(err);
 	initDB.initDefaultDB(); // Initialization DB
 	httpServer.listen(httpPort, () => { console.log(`Http server is listening on ${httpPort}`); });
-	httpsServer.listen(httpsPort, () => { console.log(`Https server is listening on ${httpsPort}`); });
+	if (httpsServer!==undefined)
+		httpsServer.listen(httpsPort, () => { console.log(`Https server is listening on ${httpsPort}`); });
 });
