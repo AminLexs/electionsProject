@@ -25,12 +25,13 @@ exports.getCandidates = async (request, response) => {
 	const votes = await getDataModel(Vote, {});
 	if (votes instanceof Error )
 		response.status(500).send(JSON.stringify({message:votes.message}))
-	const stats = votes.reduce((acc, el) => {
+	//Calculate the number of votes for each candidate
+	const stats = votes.reduce((acc, el) => { 
 		acc[el.candidateId.toString()] = (acc[el.candidateId.toString()] || 0) + 1;
 		return acc;
 	}, {});
 	const IDs = Object.keys(stats);
-	for (let i = 0; i < IDs.length; i++) {
+	for (let i = 0; i < IDs.length; i++) { // Calculate percents
 		stats[IDs[i]] /= votes.length;
 		stats[IDs[i]] *= 100;
 	}
